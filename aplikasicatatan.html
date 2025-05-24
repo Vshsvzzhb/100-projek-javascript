@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Catatan Sederhana</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #ebe6e6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1b1919;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #e3f1ff;
+            margin-bottom: 30px;
+        }
+        
+        .note-form {
+            background: #966a6a;
+            padding: 30px;
+            padding-right: 8;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            background-color: #2a2c2e;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #635959;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 16px;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        button {
+            background-color: #515e66;
+            color: rgb(255, 255, 255);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #444e53;
+        }
+        
+        .notes-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .note-card {
+            background: #6d6161;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(88, 85, 85, 0.1);
+            position: relative;
+        }
+        
+        .note-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2a2c2e;
+        }
+        
+        .note-text {
+            color: #284f52;
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+        }
+        
+        .note-date {
+            font-size: 12px;
+            color: #486061;
+            margin-bottom: 10px;
+        }
+        
+        .note-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .delete-btn {
+            background-color: #7c5c5a;
+        }
+        
+        .delete-btn:hover {
+            background-color: #5c4340;
+        }
+        
+        .edit-btn {
+            background-color: #706d66;
+            border:     solid #aa9898;
+            
+        }
+        
+        .edit-btn:hover {
+            background-color: #685d56;
+        }
+        
+        .search-container {
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #000000;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .no-notes {
+            text-align: center;
+            color: #7f8c8d;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Aplikasi Catatan Sederhana</h1>
+    
+    <div class="note-form">
+        <div class="form-group">
+            <label for="noteTitle">Judul Catatan</label>
+            <input type="text" id="noteTitle" placeholder="Masukkan judul catatan">
+        </div>
+        <div class="form-group">
+            <label for="noteText">Isi Catatan</label>
+            <textarea id="noteText" placeholder="Tulis catatan Anda di sini"></textarea>
+        </div>
+        <button id="saveNoteBtn">Simpan Catatan</button>
+    </div>
+    
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Cari catatan...">
+    </div>
+    
+    <div id="notesContainer" class="notes-container">
+    </div>
+
+    <script>
+        const noteTitleInput = document.getElementById('noteTitle');
+        const noteTextInput = document.getElementById('noteText');
+        const saveNoteBtn = document.getElementById('saveNoteBtn');
+        const notesContainer = document.getElementById('notesContainer');
+        const searchInput = document.getElementById('searchInput');
+        
+        let notes = JSON.parse(localStorage.getItem('notes')) || [];
+        let editingNoteId = null;
+        function init() {
+            renderNotes();
+            saveNoteBtn.addEventListener('click', saveNote);
+            searchInput.addEventListener('input', searchNotes);
+            loadNotes();
+        }
+        function saveNote() {
+            const title = noteTitleInput.value.trim();
+            const text = noteTextInput.value.trim();
+            
+            if (!title || !text) {
+                alert('Judul dan isi catatan tidak boleh kosong!');
+                return;
+            }
+            
+            const now = new Date();
+            const noteDate = now.toLocaleString();
+            
+            if (editingNoteId !== null) {
+                const noteIndex = notes.findIndex(note => note.id === editingNoteId);
+                if (noteIndex !== -1) {
+                    notes[noteIndex] = {
+                        id: editingNoteId,
+                        title,
+                        text,
+                        date: noteDate
+                    };
+                }
+                editingNoteId = null;
+                saveNoteBtn.textContent = 'Simpan Catatan';
+            } else {
+                
+                const newNote = {
+                    id: Date.now(),
+                    title,
+                    text,
+                    date: noteDate
+                };
+                notes.unshift(newNote); 
+            }
+
+            localStorage.setItem('notes', JSON.stringify(notes));
+           
+            noteTitleInput.value = '';
+            noteTextInput.value = '';
+            renderNotes();
+        }
+        
+        function loadNotes() {
+            const savedNotes = localStorage.getItem('notes');
+            if (savedNotes) {
+                notes = JSON.parse(savedNotes);
+                renderNotes();
+            }
+        }
+        
+        function renderNotes(filteredNotes = null) {
+            const notesToRender = filteredNotes || notes;
+            
+            if (notesToRender.length === 0) {
+                notesContainer.innerHTML = '<div class="no-notes">Tidak ada catatan. Tambahkan catatan baru!</div>';
+                return;
+            }
+            
+            notesContainer.innerHTML = notesToRender.map(note => `
+                <div class="note-card" data-id="${note.id}">
+                    <div class="note-title">${note.title}</div>
+                    <div class="note-date">${note.date}</div>
+                    <div class="note-text">${note.text}</div>
+                    <div class="note-actions">
+                        <button class="edit-btn" onclick="editNote(${note.id})">Edit</button>
+                        <button class="delete-btn" onclick="deleteNote(${note.id})">Hapus</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        window.editNote = function(id) {
+            const noteToEdit = notes.find(note => note.id === id);
+            if (noteToEdit) {
+                noteTitleInput.value = noteToEdit.title;
+                noteTextInput.value = noteToEdit.text;
+                editingNoteId = id;
+                saveNoteBtn.textContent = 'Update Catatan';
+                noteTitleInput.focus();
+            }
+        };
+        
+        window.deleteNote = function(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus catatan ini?')) {
+                notes = notes.filter(note => note.id !== id);
+                localStorage.setItem('notes', JSON.stringify(notes));
+                renderNotes();
+  
+                if (editingNoteId === id) {
+                    noteTitleInput.value = '';
+                    noteTextInput.value = '';
+                    editingNoteId = null;
+                    saveNoteBtn.textContent = 'Simpan Catatan';
+                }
+            }
+        };
+        
+        function searchNotes() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredNotes = notes.filter(note => 
+                note.title.toLowerCase().includes(searchTerm) || 
+                note.text.toLowerCase().includes(searchTerm)
+            );
+            renderNotes(filteredNotes);
+        }
+        
+        init();
+    </script>
+</body>
+</html>
