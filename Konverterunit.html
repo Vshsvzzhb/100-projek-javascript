@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konverter Unit</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .converter {
+            margin-bottom: 20px;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            font-size: 18px;
+            text-align: center;
+        }
+        .unit-group {
+            display: flex;
+            gap: 10px;
+        }
+        .unit-group div {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Konverter Unit</h1>
+        
+        <div class="converter">
+            <h2>Panjang</h2>
+            <div class="unit-group">
+                <div>
+                    <input type="number" id="lengthValue" placeholder="Masukkan nilai">
+                    <select id="lengthFrom">
+                        <option value="m">Meter (m)</option>
+                        <option value="km">Kilometer (km)</option>
+                        <option value="cm">Centimeter (cm)</option>
+                        <option value="mm">Milimeter (mm)</option>
+                        <option value="in">Inci (in)</option>
+                        <option value="ft">Kaki (ft)</option>
+                        <option value="yd">Yard (yd)</option>
+                        <option value="mi">Mil (mi)</option>
+                    </select>
+                </div>
+                <div>
+                    <input type="number" id="lengthResult" readonly>
+                    <select id="lengthTo">
+                        <option value="m">Meter (m)</option>
+                        <option value="km" selected>Kilometer (km)</option>
+                        <option value="cm">Centimeter (cm)</option>
+                        <option value="mm">Milimeter (mm)</option>
+                        <option value="in">Inci (in)</option>
+                        <option value="ft">Kaki (ft)</option>
+                        <option value="yd">Yard (yd)</option>
+                        <option value="mi">Mil (mi)</option>
+                    </select>
+                </div>
+            </div>
+            <button onclick="convertLength()">Konversi Panjang</button>
+        </div>
+        
+        <div class="converter">
+            <h2>Suhu</h2>
+            <div class="unit-group">
+                <div>
+                    <input type="number" id="tempValue" placeholder="Masukkan nilai">
+                    <select id="tempFrom">
+                        <option value="c">Celcius (°C)</option>
+                        <option value="f">Fahrenheit (°F)</option>
+                        <option value="k">Kelvin (K)</option>
+                    </select>
+                </div>
+                <div>
+                    <input type="number" id="tempResult" readonly>
+                    <select id="tempTo">
+                        <option value="c">Celcius (°C)</option>
+                        <option value="f" selected>Fahrenheit (°F)</option>
+                        <option value="k">Kelvin (K)</option>
+                    </select>
+                </div>
+            </div>
+            <button onclick="convertTemperature()">Konversi Suhu</button>
+        </div>
+        
+        <div class="converter">
+            <h2>Berat</h2>
+            <div class="unit-group">
+                <div>
+                    <input type="number" id="weightValue" placeholder="Masukkan nilai">
+                    <select id="weightFrom">
+                        <option value="kg">Kilogram (kg)</option>
+                        <option value="g">Gram (g)</option>
+                        <option value="mg">Miligram (mg)</option>
+                        <option value="lb">Pound (lb)</option>
+                        <option value="oz">Ons (oz)</option>
+                    </select>
+                </div>
+                <div>
+                    <input type="number" id="weightResult" readonly>
+                    <select id="weightTo">
+                        <option value="kg">Kilogram (kg)</option>
+                        <option value="g" selected>Gram (g)</option>
+                        <option value="mg">Miligram (mg)</option>
+                        <option value="lb">Pound (lb)</option>
+                        <option value="oz">Ons (oz)</option>
+                    </select>
+                </div>
+            </div>
+            <button onclick="convertWeight()">Konversi Berat</button>
+        </div>
+    </div>
+
+    <script>
+        
+        function convertLength() {
+            const value = parseFloat(document.getElementById('lengthValue').value);
+            const fromUnit = document.getElementById('lengthFrom').value;
+            const toUnit = document.getElementById('lengthTo').value;
+            
+            if (isNaN(value)) {
+                alert('Masukkan nilai yang valid');
+                return;
+            }
+            
+           
+            let meters;
+            switch (fromUnit) {
+                case 'm': meters = value; break;
+                case 'km': meters = value * 1000; break;
+                case 'cm': meters = value / 100; break;
+                case 'mm': meters = value / 1000; break;
+                case 'in': meters = value * 0.0254; break;
+                case 'ft': meters = value * 0.3048; break;
+                case 'yd': meters = value * 0.9144; break;
+                case 'mi': meters = value * 1609.344; break;
+            }
+            
+            // Konversi dari meter ke unit tujuan
+            let result;
+            switch (toUnit) {
+                case 'm': result = meters; break;
+                case 'km': result = meters / 1000; break;
+                case 'cm': result = meters * 100; break;
+                case 'mm': result = meters * 1000; break;
+                case 'in': result = meters / 0.0254; break;
+                case 'ft': result = meters / 0.3048; break;
+                case 'yd': result = meters / 0.9144; break;
+                case 'mi': result = meters / 1609.344; break;
+            }
+            
+            document.getElementById('lengthResult').value = result.toFixed(6);
+        }
+        
+        function convertTemperature() {
+            const value = parseFloat(document.getElementById('tempValue').value);
+            const fromUnit = document.getElementById('tempFrom').value;
+            const toUnit = document.getElementById('tempTo').value;
+            
+            if (isNaN(value)) {
+                alert('Masukkan nilai yang valid');
+                return;
+            }
+            
+            let celsius;
+            switch (fromUnit) {
+                case 'c': celsius = value; break;
+                case 'f': celsius = (value - 32) * 5/9; break;
+                case 'k': celsius = value - 273.15; break;
+            }
+            
+            let result;
+            switch (toUnit) {
+                case 'c': result = celsius; break;
+                case 'f': result = (celsius * 9/5) + 32; break;
+                case 'k': result = celsius + 273.15; break;
+            }
+            
+            document.getElementById('tempResult').value = result.toFixed(2);
+        }
+        
+        function convertWeight() {
+            const value = parseFloat(document.getElementById('weightValue').value);
+            const fromUnit = document.getElementById('weightFrom').value;
+            const toUnit = document.getElementById('weightTo').value;
+            
+            if (isNaN(value)) {
+                alert('Masukkan nilai yang valid');
+                return;
+            }
+            
+            let kilograms;
+            switch (fromUnit) {
+                case 'kg': kilograms = value; break;
+                case 'g': kilograms = value / 1000; break;
+                case 'mg': kilograms = value / 1000000; break;
+                case 'lb': kilograms = value * 0.453592; break;
+                case 'oz': kilograms = value * 0.0283495; break;
+            }
+            
+            
+            let result;
+            switch (toUnit) {
+                case 'kg': result = kilograms; break;
+                case 'g': result = kilograms * 1000; break;
+                case 'mg': result = kilograms * 1000000; break;
+                case 'lb': result = kilograms / 0.453592; break;
+                case 'oz': result = kilograms / 0.0283495; break;
+            }
+            
+            document.getElementById('weightResult').value = result.toFixed(6);
+        }
+    </script>
+</body>
+</html>

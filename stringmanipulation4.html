@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mengganti Substring</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        textarea {
+            min-height: 100px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mengganti Substring</h1>
+        <textarea id="originalText" placeholder="Masukkan teks..."></textarea>
+        <input type="text" id="searchText" placeholder="Cari teks...">
+        <input type="text" id="replaceText" placeholder="Ganti dengan...">
+        <button onclick="replaceText()">Ganti Teks</button>
+        <div class="result">
+            <p><strong>Hasil:</strong></p>
+            <p id="resultText"></p>
+        </div>
+    </div>
+
+    <script>
+        function replaceText() {
+            const original = document.getElementById('originalText').value;
+            const search = document.getElementById('searchText').value;
+            const replace = document.getElementById('replaceText').value;
+            
+            const result = original.replace(new RegExp(search, 'g'), replace);
+            
+            document.getElementById('resultText').textContent = result;
+        }
+    </script>
+</body>
+</html>

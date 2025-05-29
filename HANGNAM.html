@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Tebak Kata</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        #wordDisplay {
+            font-size: 24px;
+            letter-spacing: 10px;
+            margin: 20px 0;
+        }
+        #letters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+            margin: 20px 0;
+        }
+        .letter-btn {
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .letter-btn:hover:not(:disabled) {
+            background-color: #2980b9;
+        }
+        .letter-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        #hangman {
+            margin: 20px auto;
+            font-family: monospace;
+            white-space: pre;
+            text-align: left;
+            display: inline-block;
+        }
+        #message {
+            font-size: 18px;
+            margin: 10px 0;
+            min-height: 27px;
+        }
+        button#restart {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button#restart:hover {
+            background-color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Game Tebak Kata</h1>
+        <div id="hangman">
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========
+        </div>
+        <div id="wordDisplay"></div>
+        <div id="message"></div>
+        <div id="letters"></div>
+        <button id="restart" onclick="startGame()">Main Lagi</button>
+    </div>
+
+    <script>
+        const words = ['javascript', 'html', 'css', 'python', 'programming', 'developer', 'computer', 'algorithm'];
+        let selectedWord = '';
+        let guessedLetters = [];
+        let mistakes = 0;
+        const maxMistakes = 6;
+
+       
+        const wordDisplayEl = document.getElementById('wordDisplay');
+        const lettersEl = document.getElementById('letters');
+        const messageEl = document.getElementById('message');
+        const hangmanEl = document.getElementById('hangman');
+
+        
+        const hangmanStages = [
+`
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========
+`,
+`
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========
+`,
+`
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========
+`,
+`
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========
+`,
+`
+  +---+
+  |   |
+  O   |
+ /|\\  |
+      |
+      |
+=========
+`,
+`
+  +---+
+  |   |
+  O   |
+ /|\\  |
+ /    |
+      |
+=========
+`,
+`
+  +---+
+  |   |
+  O   |
+ /|\\  |
+ / \\  |
+      |
+=========
+`
+        ];
+
+     
+        function startGame() {
+            
+            selectedWord = words[Math.floor(Math.random() * words.length)];
+            guessedLetters = [];
+            mistakes = 0;
+            
+            
+            displayWord();
+            
+            
+            createLetterButtons();
+           
+            messageEl.textContent = '';
+            hangmanEl.textContent = hangmanStages[0];
+            
+            const buttons = lettersEl.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.disabled = false;
+            });
+        }
+
+        function displayWord() {
+            const displayedWord = selectedWord
+                .split('')
+                .map(letter => guessedLetters.includes(letter) ? letter : '_')
+                .join(' ');
+            
+            wordDisplayEl.textContent = displayedWord;
+            
+            if (!displayedWord.includes('_')) {
+                messageEl.textContent = 'Selamat! Anda menang!';
+                disableAllLetters();
+            }
+        }
+
+        function createLetterButtons() {
+            lettersEl.innerHTML = '';
+            for (let i = 0; i < 26; i++) {
+                const letter = String.fromCharCode(97 + i);
+                const button = document.createElement('button');
+                button.textContent = letter;
+                button.className = 'letter-btn';
+                button.addEventListener('click', () => guessLetter(letter));
+                lettersEl.appendChild(button);
+            }
+        }
+
+        function guessLetter(letter) {
+            if (guessedLetters.includes(letter)) return;
+            
+            guessedLetters.push(letter);
+            const button = Array.from(lettersEl.querySelectorAll('button'))
+                .find(btn => btn.textContent === letter);
+            button.disabled = true;
+            
+            if (selectedWord.includes(letter)) {
+                displayWord();
+            } else {
+                mistakes++;
+                hangmanEl.textContent = hangmanStages[mistakes];
+                if (mistakes >= maxMistakes) {
+                    messageEl.textContent = `Game over! Kata yang benar adalah: ${selectedWord}`;
+                    disableAllLetters();
+                } else {
+                    messageEl.textContent = 'Huruf tidak ada dalam kata!';
+                }
+            }
+        }
+
+        function disableAllLetters() {
+            const buttons = lettersEl.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.disabled = true;
+            });
+        }
+
+        window.onload = startGame;
+    </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penghitung Hari</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .date-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .date-input div {
+            flex: 1;
+            min-width: 120px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #result {
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            font-size: 18px;
+            text-align: center;
+            min-height: 100px;
+        }
+        .highlight {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Penghitung Hari</h1>
+        
+        <div class="date-input">
+            <div>
+                <label for="startDate">Tanggal Mulai:</label>
+                <input type="date" id="startDate">
+            </div>
+            <div>
+                <label for="endDate">Tanggal Akhir:</label>
+                <input type="date" id="endDate">
+            </div>
+        </div>
+        
+        <button onclick="calculateDays()">Hitung Hari</button>
+        
+        <div id="result">
+            Masukkan kedua tanggal untuk menghitung selisih hari.
+        </div>
+    </div>
+
+    <script>
+        function calculateDays() {
+            const startDateInput = document.getElementById('startDate').value;
+            const endDateInput = document.getElementById('endDate').value;
+            const resultDiv = document.getElementById('result');
+            
+            if (!startDateInput || !endDateInput) {
+                resultDiv.innerHTML = 'Mohon masukkan kedua tanggal.';
+                return;
+            }
+            
+            const startDate = new Date(startDateInput);
+            const endDate = new Date(endDateInput);
+            
+            if (startDate > endDate) {
+                resultDiv.innerHTML = 'Tanggal mulai harus sebelum tanggal akhir.';
+                return;
+            }
+            
+            
+            const diffTime = endDate - startDate;
+            
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const startFormatted = startDate.toLocaleDateString('id-ID', options);
+            const endFormatted = endDate.toLocaleDateString('id-ID', options);
+            
+            resultDiv.innerHTML = `
+                <p>Dari <span class="highlight">${startFormatted}</span></p>
+                <p>Sampai <span class="highlight">${endFormatted}</span></p>
+                <p>Selisih: <span class="highlight">${diffDays} hari</span></p>
+            `;
+        }
+       
+        window.onload = function() {
+            const today = new Date();
+            const tomorrow = new Date();
+            tomorrow.setDate(today.getDate() + 1);
+            
+            const formatDate = (date) => {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            };
+            
+            document.getElementById('startDate').value = formatDate(today);
+            document.getElementById('endDate').value = formatDate(tomorrow);
+        };
+    </script>
+</body>
+</html>
