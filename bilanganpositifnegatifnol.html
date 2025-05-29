@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cek Bilangan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .positive {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+        .negative {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .zero {
+            color: #3498db;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>14. Cek Bilangan Positif/Negatif/Nol</h2>
+    <input type="number" id="numberInput" placeholder="Masukkan bilangan">
+    <button onclick="checkNumber()">Cek</button>
+    <p id="numberResult"></p>
+
+    <script>
+        function checkNumber() {
+            const number = parseFloat(document.getElementById('numberInput').value);
+            const resultElement = document.getElementById('numberResult');
+            
+            if (isNaN(number)) {
+                resultElement.textContent = 'Silakan masukkan bilangan';
+                resultElement.className = '';
+                return;
+            }
+
+            if (number > 0) {
+                resultElement.textContent = `${number} adalah bilangan positif`;
+                resultElement.className = 'positive';
+            } else if (number < 0) {
+                resultElement.textContent = `${number} adalah bilangan negatif`;
+                resultElement.className = 'negative';
+            } else {
+                resultElement.textContent = 'Ini adalah nol';
+                resultElement.className = 'zero';
+            }
+        }
+    </script>
+</body>
+</html>

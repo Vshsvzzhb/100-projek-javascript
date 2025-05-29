@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cek Tahun Kabisat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .leap {
+            color: green;
+            font-weight: bold;
+        }
+        .not-leap {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2> Cek Tahun Kabisat</h2>
+    <input type="number" id="yearInput" placeholder="Masukkan tahun">
+    <button onclick="checkLeapYear()">Cek</button>
+    <p id="leapYearResult"></p>
+
+    <script>
+        function checkLeapYear() {
+            const year = document.getElementById('yearInput').value;
+            const resultElement = document.getElementById('leapYearResult');
+            
+            if (year === '') {
+                resultElement.textContent = 'Silakan masukkan tahun';
+                resultElement.className = '';
+                return;
+            }
+
+            if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
+                resultElement.textContent = `${year} adalah tahun kabisat`;
+                resultElement.className = 'leap';
+            } else {
+                resultElement.textContent = `${year} bukan tahun kabisat`;
+                resultElement.className = 'not-leap';
+            }
+        }
+    </script>
+</body>
+</html>

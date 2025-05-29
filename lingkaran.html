@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lingkaran Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .calculator {
+            border: 1px solid #442c2c;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #7a6868;
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px 0;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 9px;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #978e8e;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h2>Kalkulator Lingkaran</h2>
+        <label for="radius">Jari-jari:</label>
+        <input type="number" id="radius" placeholder="Masukkan jari-jari" style="background-color: #abb4ab; border: none; border-radius: 9px;">
+        <button onclick="calculateCircle()">Hitung</button>
+        <div class="result" id="circleResult">
+            Hasil akan muncul di sini
+        </div>
+    </div>
+
+    <script>
+        function calculateCircle() {
+            const radius = parseFloat(document.getElementById('radius').value);
+            if (isNaN(radius) || radius <= 0) {
+                document.getElementById('circleResult').innerHTML = 
+                    'Masukkan nilai yang valid untuk jari-jari';
+                return;
+            }
+            
+            const area = Math.PI * radius * radius;
+            const circumference = 2 * Math.PI * radius;
+            
+            document.getElementById('circleResult').innerHTML = 
+                `Luas: ${area.toFixed(2)} <br> Keliling: ${circumference.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>

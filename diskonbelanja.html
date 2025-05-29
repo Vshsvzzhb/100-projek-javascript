@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program Diskon</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .discount-info {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <h2>10. Program Diskon Belanja</h2>
+    <div>
+        <label for="totalInput">Total Belanja (Rp):</label>
+        <input type="number" id="totalInput" placeholder="Masukkan total belanja">
+    </div>
+    <button onclick="calculateDiscount()">Hitung Diskon</button>
+    <div id="discountResult" class="discount-info"></div>
+
+    <script>
+        function calculateDiscount() {
+            const total = parseFloat(document.getElementById('totalInput').value);
+            const resultElement = document.getElementById('discountResult');
+            
+            if (isNaN(total) || total < 0) {
+                resultElement.innerHTML = 'Silakan masukkan total belanja yang valid';
+                return;
+            }
+
+            let discount = 0;
+            let discountRate = 0;
+            
+            if (total > 1000000) {
+                discountRate = 0.3; 
+            } else if (total > 500000) {
+                discountRate = 0.2; 
+            } else if (total > 300000) {
+                discountRate = 0.1; 
+            } else if (total > 100000) {
+                discountRate = 0.05; 
+            }
+            
+            discount = total * discountRate;
+            const finalTotal = total - discount;
+            
+            resultElement.innerHTML = `
+                <p>Total Belanja: Rp${total.toLocaleString()}</p>
+                ${discountRate > 0 ? 
+                    `<p>Diskon ${discountRate * 100}%: Rp${discount.toLocaleString()}</p>` : 
+                    '<p>Tidak mendapatkan diskon</p>'}
+                <p><strong>Total Bayar: Rp${finalTotal.toLocaleString()}</strong></p>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jam Digital</title>
+    <style>
+        body { font-family: Arial; text-align: center; margin-top: 50px;  color: white; background-color: rgb(74, 173, 140);text-shadow: 7px 1px 15px rgba(24,18,18,0.61); backdrop-filter: blur(10);}
+        #clock { font-size: 48px; font-weight: bold; background-color: aquamarine; margin-left: 150px; margin-right: 150px; color: white; padding-top: 10px; padding-bottom: 10px; padding-left: 5px; padding-right: 5px; border: 3px  solid rgb(112, 206, 193); border-radius: 5pc; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;}
+    </style>
+</head>
+<body>
+    <h1>Jam Digital</h1>
+    <div id="clock"></div>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock(); 
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kubus Calculator</title>
+    <style>
+      h2 {
+        color: white;
+      }
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: gray;
+        }
+        .calculator {
+            border: 1px solid #dfd5d5;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #d6c7c7;
+            color: white;
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px 0;
+        }
+        button {
+            background-color: #454e45;
+            color: rgb(221, 190, 190);
+            border: none;
+            cursor: pointer;
+            border-radius: 9px;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #7c6666;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h2>Kalkulator Kubus</h2>
+        <label for="cubeSide">Panjang Sisi:</label>
+        <input type="number" id="cubeSide" placeholder="Masukkan panjang sisi" style="background-color: #857272; border: none; border-radius: 9px;">
+        <button onclick="calculateCube()">Hitung</button>
+        <div class="result" id="cubeResult">
+            Hasil akan muncul di sini
+        </div>
+    </div>
+
+    <script>
+        function calculateCube() {
+            const side = parseFloat(document.getElementById('cubeSide').value);
+            if (isNaN(side) || side <= 0) {
+                document.getElementById('cubeResult').innerHTML = 
+                    'Masukkan nilai yang valid untuk panjang sisi';
+                return;
+            }
+            
+            const volume = side * side * side;
+            const surfaceArea = 6 * side * side;
+            
+            document.getElementById('cubeResult').innerHTML = 
+                `Volume: ${volume.toFixed(2)} <br> Luas Permukaan: ${surfaceArea.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>

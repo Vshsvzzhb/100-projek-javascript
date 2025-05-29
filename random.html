@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Random Quote Generator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .quote-box {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .quote {
+      font-size: 1.4em;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .author {
+      font-style: italic;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      background: #007bff;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quote-box">
+  <div class="quote" id="quoteText">Klik tombol di bawah untuk mendapatkan kutipan.</div>
+  <div class="author" id="quoteAuthor">-</div>
+  <button onclick="generateQuote()">🎲 Kutipan Baru</button>
+</div>
+
+<script>
+  const quotes = [
+    { text: "Hidup adalah belajar tanpa henti.", author: "Anonim" },
+    { text: "Kesuksesan dimulai dari keberanian untuk mencoba.", author: "Napoleon Hill" },
+    { text: "Jadilah perubahan yang ingin kamu lihat di dunia.", author: "Mahatma Gandhi" },
+    { text: "Kegagalan adalah kesempatan untuk memulai kembali dengan lebih cerdas.", author: "Henry Ford" },
+    { text: "Percaya pada dirimu sendiri dan segala sesuatu menjadi mungkin.", author: "Christian D. Larson" },
+    { text: "Semangat adalah bahan bakar dari pencapaian.", author: "Oprah Winfrey" },
+    { text: "Ketekunan mengalahkan bakat ketika bakat tidak bekerja keras.", author: "Kevin Durant" }
+  ];
+
+  function generateQuote() {
+    const random = Math.floor(Math.random() * quotes.length);
+    document.getElementById("quoteText").textContent = `"${quotes[random].text}"`;
+    document.getElementById("quoteAuthor").textContent = `— ${quotes[random].author}`;
+  }
+</script>
+
+</body>
+</html>

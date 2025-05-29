@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luas Persegi</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h2>Luas Persegi</h2>
+            <p class="formula">Rumus: sisi × sisi</p>
+            <div class="input-group">
+                <label for="side">Panjang Sisi:</label>
+                <input type="number" id="side" placeholder="Masukkan panjang sisi">
+            </div>
+            <button onclick="calculate()">Hitung Luas</button>
+            <div class="result" id="result"></div>
+        </div>
+    </div>
+    <script>
+      function calculate() {
+    const side = parseFloat(document.getElementById('side').value);
+    const area = side * side;
+    document.getElementById('result').innerHTML = `Luas: ${area.toFixed(2)}`;
+}
+    </script>
+
+<div class="container">
+  <div class="card">
+      <h2>Keliling Persegi</h2>
+      <p class="formula">Rumus: 4 × sisi</p>
+      <div class="input-group">
+          <label for="side">Panjang Sisi:</label>
+          <input type="number" id="side" placeholder="Masukkan panjang sisi">
+      </div>
+      <button onclick="calculate()">Hitung Keliling</button>
+      <div class="result" id="result"></div>
+  </div>
+</div>
+
+<script>
+  function calculate() {
+    const side = parseFloat(document.getElementById('side').value);
+    const perimeter = 4 * side;
+    document.getElementById('result').innerHTML = `Keliling: ${perimeter.toFixed(2)}`;
+}
+</script>
+</body>
+</html>

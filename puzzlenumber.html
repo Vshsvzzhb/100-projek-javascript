@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Puzzle Sliding Numbers</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(4, 80px);
+      grid-template-rows: repeat(4, 80px);
+      gap: 5px;
+    }
+
+    .tile {
+      width: 80px;
+      height: 80px;
+      background: #007bff;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .tile:empty {
+      background: #ccc;
+      cursor: default;
+    }
+  </style>
+</head>
+<body>
+  <div class="board" id="board"></div>
+
+  <script>
+    const board = document.getElementById('board');
+    let tiles = [];
+
+    function initBoard() {
+      let numbers = [...Array(15).keys()].map(n => n + 1);
+      numbers.push(null);
+      do {
+        numbers = shuffle(numbers);
+      } while (!isSolvable(numbers));
+      
+      tiles = numbers;
+      renderBoard();
+    }
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function renderBoard() {
+      board.innerHTML = '';
+      tiles.forEach((number, index) => {
+        const tile = document.createElement('div');
+        tile.className = 'tile';
+        if (number !== null) {
+          tile.textContent = number;
+          tile.addEventListener('click', () => moveTile(index));
+        }
+        board.appendChild(tile);
+      });
+    }
+
+    function moveTile(index) {
+      const emptyIndex = tiles.indexOf(null);
+      const validMoves = [index - 1, index + 1, index - 4, index + 4];
+
+      if (validMoves.includes(emptyIndex)) {
+        // Cek batas horizontal agar tidak menukar ke baris berbeda
+        if (Math.abs(index - emptyIndex) === 1 && Math.floor(index / 4) !== Math.floor(emptyIndex / 4)) return;
+        [tiles[index], tiles[emptyIndex]] = [tiles[emptyIndex], tiles[index]];
+        renderBoard();
+        if (isCompleted()) {
+          setTimeout(() => alert("Selamat! Kamu menyelesaikan puzzle!"), 100);
+        }
+      }
+    }
+
+    function isCompleted() {
+      for (let i = 0; i < 15; i++) {
+        if (tiles[i] !== i + 1) return false;
+      }
+      return true;
+    }
+
+    function isSolvable(arr) {
+      let inversions = 0;
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = i + 1; j < arr.length; j++) {
+          if (arr[i] && arr[j] && arr[i] > arr[j]) inversions++;
+        }
+      }
+      const emptyRow = Math.floor(arr.indexOf(null) / 4);
+      return (emptyRow % 2 === 0) ? inversions % 2 === 1 : inversions % 2 === 0;
+    }
+
+    initBoard();
+  </script>
+</body>
+</html>

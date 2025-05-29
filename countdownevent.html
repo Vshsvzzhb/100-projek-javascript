@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Event</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #222;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    .countdown {
+      display: flex;
+      gap: 20px;
+      font-size: 2em;
+    }
+
+    .unit {
+      text-align: center;
+    }
+
+    .value {
+      font-weight: bold;
+    }
+
+    .label {
+      font-size: 0.6em;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<h1>⏳ Countdown ke Acara</h1>
+<div class="countdown" id="countdown">
+  <div class="unit">
+    <div class="value" id="days">00</div>
+    <div class="label">Hari</div>
+  </div>
+  <div class="unit">
+    <div class="value" id="hours">00</div>
+    <div class="label">Jam</div>
+  </div>
+  <div class="unit">
+    <div class="value" id="minutes">00</div>
+    <div class="label">Menit</div>
+  </div>
+  <div class="unit">
+    <div class="value" id="seconds">00</div>
+    <div class="label">Detik</div>
+  </div>
+</div>
+
+<script>
+  const targetDate = new Date("2026-05-26T23:59:59");
+
+  function updateCountdown() {
+    const now = new Date();
+    const gap = targetDate - now;
+
+    if (gap <= 0) {
+      document.getElementById("countdown").innerHTML = "<h2>Acara Dimulai!</h2>";
+      return;
+    }
+
+    const seconds = Math.floor((gap / 1000) % 60);
+    const minutes = Math.floor((gap / 1000 / 60) % 60);
+    const hours = Math.floor((gap / (1000 * 60 * 60)) % 24);
+    const days = Math.floor(gap / (1000 * 60 * 60 * 24));
+
+    document.getElementById("days").textContent = String(days).padStart(2, '0');
+    document.getElementById("hours").textContent = String(hours).padStart(2, '0');
+    document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
+    document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
+  }
+
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+</script>
+
+</body>
+</html>

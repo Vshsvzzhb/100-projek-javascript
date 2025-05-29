@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kategori Produk</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .category {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <h2>13. Kategori Produk</h2>
+    <div>
+        <label for="priceInput">Harga Produk (Rp):</label>
+        <input type="number" id="priceInput" placeholder="Masukkan harga produk">
+    </div>
+    <button onclick="categorizeProduct()">Tentukan Kategori</button>
+    <div id="categoryResult" class="category"></div>
+
+    <script>
+        function categorizeProduct() {
+            const price = parseFloat(document.getElementById('priceInput').value);
+            const resultElement = document.getElementById('categoryResult');
+            
+            if (isNaN(price) || price < 0) {
+                resultElement.innerHTML = 'Silakan masukkan harga yang valid';
+                return;
+            }
+
+            let category = '';
+            let description = '';
+            
+            if (price > 1000000) {
+                category = 'Premium';
+                description = 'Produk mewah dengan kualitas terbaik';
+            } else if (price > 500000) {
+                category = 'Standar';
+                description = 'Produk dengan kualitas baik dan harga terjangkau';
+            } else if (price > 100000) {
+                category = 'Ekonomi';
+                description = 'Produk dengan harga bersaing';
+            } else {
+                category = 'Murah';
+                description = 'Produk dengan harga sangat terjangkau';
+            }
+            
+            resultElement.innerHTML = `
+                <p><strong>Kategori:</strong> ${category}</p>
+                <p><strong>Deskripsi:</strong> ${description}</p>
+                <p><strong>Harga:</strong> Rp${price.toLocaleString()}</p>
+            `;
+        }
+    </script>
+</body>
+</html>

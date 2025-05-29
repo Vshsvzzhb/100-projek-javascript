@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sistem Manajemen Konten Sederhana</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 40px;
+      background-color: #f4f4f4;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .editor {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: 20px auto;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      margin-right: 10px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button.edit {
+      background-color: #ffc107;
+    }
+
+    button.delete {
+      background-color: #dc3545;
+    }
+
+    .articles {
+      max-width: 700px;
+      margin: 30px auto;
+    }
+
+    .article {
+      background: white;
+      margin-bottom: 20px;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+    }
+
+    .article h3 {
+      margin-top: 0;
+    }
+
+    .controls {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>📰 CMS Sederhana</h2>
+
+<div class="editor">
+  <input type="text" id="titleInput" placeholder="Judul Artikel" />
+  <textarea id="contentInput" rows="5" placeholder="Isi artikel..."></textarea>
+  <button onclick="saveArticle()">Simpan</button>
+  <button onclick="clearForm()">Reset</button>
+</div>
+
+<div class="articles" id="articleList"></div>
+
+<script>
+  let articles = [];
+  let editIndex = null;
+
+  function saveArticle() {
+    const title = document.getElementById('titleInput').value.trim();
+    const content = document.getElementById('contentInput').value.trim();
+
+    if (!title || !content) return alert("Mohon isi semua field!");
+
+    if (editIndex !== null) {
+      articles[editIndex] = { title, content };
+      editIndex = null;
+    } else {
+      articles.push({ title, content });
+    }
+
+    clearForm();
+    renderArticles();
+  }
+
+  function renderArticles() {
+    const list = document.getElementById('articleList');
+    list.innerHTML = '';
+
+    articles.forEach((article, index) => {
+      const div = document.createElement('div');
+      div.className = 'article';
+      div.innerHTML = `
+        <h3>${article.title}</h3>
+        <p>${article.content}</p>
+        <div class="controls">
+          <button class="edit" onclick="editArticle(${index})">Edit</button>
+          <button class="delete" onclick="deleteArticle(${index})">Hapus</button>
+        </div>
+      `;
+      list.appendChild(div);
+    });
+  }
+
+  function clearForm() {
+    document.getElementById('titleInput').value = '';
+    document.getElementById('contentInput').value = '';
+  }
+
+  function editArticle(index) {
+    const article = articles[index];
+    document.getElementById('titleInput').value = article.title;
+    document.getElementById('contentInput').value = article.content;
+    editIndex = index;
+  }
+
+  function deleteArticle(index) {
+    if (confirm("Yakin ingin menghapus artikel ini?")) {
+      articles.splice(index, 1);
+      renderArticles();
+    }
+  }
+</script>
+
+</body>
+</html>

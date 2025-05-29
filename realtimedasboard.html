@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-Time Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    .value {
+      font-size: 2em;
+      margin-top: 10px;
+      color: #007bff;
+    }
+  </style>
+</head>
+<body>
+
+<h2> Real-Time Dashboard</h2>
+
+<div class="dashboard">
+  <div class="card">
+    <h3> Jam Saat Ini</h3>
+    <div class="value" id="currentTime">--:--:--</div>
+  </div>
+  <div class="card">
+    <h3> Penggunaan CPU (Dummy)</h3>
+    <div class="value" id="cpuUsage">0%</div>
+  </div>
+  <div class="card">
+    <h3> Pengguna Aktif</h3>
+    <div class="value" id="activeUsers">0</div>
+  </div>
+</div>
+
+<script>
+  function updateDashboard() {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString();
+    document.getElementById('currentTime').textContent = timeStr;
+
+    const cpu = Math.floor(Math.random() * 100);
+    document.getElementById('cpuUsage').textContent = cpu + '%';
+
+    const users = Math.floor(Math.random() * 500) + 50;
+    document.getElementById('activeUsers').textContent = users;
+  }
+
+  setInterval(updateDashboard, 1000);
+  updateDashboard();
+</script>
+
+</body>
+</html>

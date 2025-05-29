@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Volume Limas Segiempat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .calculator {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px 0;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #388e3c;
+        }
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h2>Kalkulator Volume Limas Segiempat</h2>
+        <label for="length">Panjang Alas:</label>
+        <input type="number" id="length" placeholder="Masukkan panjang alas">
+        <label for="width">Lebar Alas:</label>
+        <input type="number" id="width" placeholder="Masukkan lebar alas">
+        <label for="height">Tinggi Limas:</label>
+        <input type="number" id="height" placeholder="Masukkan tinggi limas">
+        <button onclick="calculateVolume()">Hitung Volume</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateVolume() {
+            const length = parseFloat(document.getElementById('length').value);
+            const width = parseFloat(document.getElementById('width').value);
+            const height = parseFloat(document.getElementById('height').value);
+            
+            if (isNaN(length) || isNaN(width) || isNaN(height)) {
+                document.getElementById('result').innerHTML = "Masukkan nilai yang valid!";
+                return;
+            }
+            
+            const baseArea = length * width;
+            const volume = (1/3) * baseArea * height;
+            document.getElementById('result').innerHTML = `Volume Limas Segiempat = ${volume.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>

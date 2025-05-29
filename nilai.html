@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kategori Nilai</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .grade-A {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+        .grade-B {
+            color: #3498db;
+            font-weight: bold;
+        }
+        .grade-C {
+            color: #f39c12;
+            font-weight: bold;
+        }
+        .grade-D {
+            color: #e67e22;
+            font-weight: bold;
+        }
+        .grade-E {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>8. Kategori Nilai Mahasiswa</h2>
+    <input type="number" id="scoreInput" placeholder="Masukkan nilai (0-100)" min="0" max="100">
+    <button onclick="gradeScore()">Tentukan Grade</button>
+    <p id="gradeResult"></p>
+
+    <script>
+        function gradeScore() {
+            const score = parseFloat(document.getElementById('scoreInput').value);
+            const resultElement = document.getElementById('gradeResult');
+            
+            if (isNaN(score) || score < 0 || score > 100) {
+                resultElement.textContent = 'Silakan masukkan nilai antara 0-100';
+                resultElement.className = '';
+                return;
+            }
+
+            if (score >= 90) {
+                resultElement.textContent = 'Grade: A (Sangat Baik)';
+                resultElement.className = 'grade-A';
+            } else if (score >= 80) {
+                resultElement.textContent = 'Grade: B (Baik)';
+                resultElement.className = 'grade-B';
+            } else if (score >= 70) {
+                resultElement.textContent = 'Grade: C (Cukup)';
+                resultElement.className = 'grade-C';
+            } else if (score >= 60) {
+                resultElement.textContent = 'Grade: D (Kurang)';
+                resultElement.className = 'grade-D';
+            } else {
+                resultElement.textContent = 'Grade: E (Gagal)';
+                resultElement.className = 'grade-E';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Forum Diskusi Sederhana</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #fafafa;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .new-thread {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+
+    input, textarea {
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .threads {
+      list-style: none;
+      padding: 0;
+    }
+
+    .thread {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+
+    .thread h3 {
+      margin-top: 0;
+    }
+
+    .comments {
+      margin-top: 15px;
+      border-top: 1px solid #eee;
+      padding-top: 10px;
+    }
+
+    .comment {
+      background: #f0f0f0;
+      margin-bottom: 8px;
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
+
+    .comment-form {
+      margin-top: 10px;
+    }
+
+    .comment-form textarea {
+      resize: vertical;
+      height: 60px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>💬 Forum Diskusi Sederhana</h2>
+
+<div class="new-thread">
+  <input type="text" id="threadTitle" placeholder="Judul Thread" />
+  <textarea id="threadContent" placeholder="Isi Thread"></textarea>
+  <button onclick="addThread()">Buat Thread</button>
+</div>
+
+<ul class="threads" id="threadList"></ul>
+
+<script>
+  const threads = [];
+
+  function addThread() {
+    const title = document.getElementById('threadTitle').value.trim();
+    const content = document.getElementById('threadContent').value.trim();
+
+    if (!title || !content) {
+      alert('Mohon isi judul dan isi thread!');
+      return;
+    }
+
+    threads.push({ title, content, comments: [] });
+    renderThreads();
+
+    document.getElementById('threadTitle').value = '';
+    document.getElementById('threadContent').value = '';
+  }
+
+  function renderThreads() {
+    const threadList = document.getElementById('threadList');
+    threadList.innerHTML = '';
+
+    threads.forEach((thread, idx) => {
+      const li = document.createElement('li');
+      li.className = 'thread';
+
+      li.innerHTML = `
+        <h3>${thread.title}</h3>
+        <p>${thread.content}</p>
+
+        <div class="comments" id="comments-${idx}">
+          ${thread.comments.map(c => `<div class="comment">${c}</div>`).join('')}
+        </div>
+
+        <div class="comment-form">
+          <textarea id="commentInput-${idx}" placeholder="Tulis komentar..."></textarea>
+          <button onclick="addComment(${idx})">Kirim Komentar</button>
+        </div>
+      `;
+
+      threadList.appendChild(li);
+    });
+  }
+
+  function addComment(threadIndex) {
+    const input = document.getElementById(`commentInput-${threadIndex}`);
+    const comment = input.value.trim();
+    if (!comment) return alert('Komentar tidak boleh kosong.');
+
+    threads[threadIndex].comments.push(comment);
+    input.value = '';
+    renderThreads();
+  }
+
+  renderThreads();
+</script>
+
+</body>
+</html>

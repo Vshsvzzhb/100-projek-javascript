@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pencatat Ide</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fefefe;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .container {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: calc(100% - 100px);
+      padding: 10px;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    li {
+      background: #f0f0f0;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn-delete {
+      background: #dc3545;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>💡 Pencatat Ide</h2>
+  <div>
+    <input type="text" id="ideaInput" placeholder="Tulis ide kamu...">
+    <button onclick="addIdea()">Simpan</button>
+  </div>
+  <ul id="ideaList"></ul>
+</div>
+
+<script>
+  const ideaInput = document.getElementById("ideaInput");
+  const ideaList = document.getElementById("ideaList");
+
+  function addIdea() {
+    const idea = ideaInput.value.trim();
+    if (idea === '') return;
+
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <span>${idea}</span>
+      <button class="btn-delete" onclick="deleteIdea(this)">Hapus</button>
+    `;
+    ideaList.appendChild(li);
+    ideaInput.value = '';
+  }
+
+  function deleteIdea(button) {
+    const li = button.parentElement;
+    ideaList.removeChild(li);
+  }
+</script>
+
+</body>
+</html>

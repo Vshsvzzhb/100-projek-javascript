@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goal Tracker</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    input[type="text"] {
+      width: calc(100% - 100px);
+      padding: 10px;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #28a745;
+      border: none;
+      color: white;
+      border-radius: 5px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    li {
+      padding: 10px;
+      background: #f0f0f0;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    li.done {
+      text-decoration: line-through;
+      color: #888;
+      background: #d4edda;
+    }
+
+    .btn-delete {
+      background: #dc3545;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>🎯 Goal Tracker</h2>
+  <div>
+    <input type="text" id="goalInput" placeholder="Masukkan target...">
+    <button onclick="addGoal()">Tambah</button>
+  </div>
+  <ul id="goalList"></ul>
+</div>
+
+<script>
+  const goalInput = document.getElementById("goalInput");
+  const goalList = document.getElementById("goalList");
+
+  function addGoal() {
+    const text = goalInput.value.trim();
+    if (text === '') return;
+
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <span onclick="toggleDone(this)">${text}</span>
+      <button class="btn-delete" onclick="deleteGoal(this)">Hapus</button>
+    `;
+    goalList.appendChild(li);
+    goalInput.value = '';
+  }
+
+  function toggleDone(element) {
+    element.parentElement.classList.toggle('done');
+  }
+
+  function deleteGoal(button) {
+    const li = button.parentElement;
+    goalList.removeChild(li);
+  }
+</script>
+
+</body>
+</html>

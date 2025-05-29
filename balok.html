@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Balok Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            color: white;
+        }
+        .calculator {
+            border: 1px solid #807575;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #726a6a;
+            border-radius: 9px;
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px 0;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e9e9e9;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h2>Kalkulator Balok</h2>
+        <label for="length">Panjang:</label>
+        <input type="number" id="length" placeholder="Masukkan panjang" style="border-radius: 9px; border: none;">
+        <label for="width">Lebar:</label>
+        <input type="number" id="width" placeholder="Masukkan lebar" style="border-radius: 9px; border: none;">
+        <label for="height">Tinggi:</label>
+        <input type="number" id="height" placeholder="Masukkan tinggi" style="border-radius: 9px; border: none;">
+        <button onclick="calculateCuboid()">Hitung</button>
+        <div class="result" id="cuboidResult">
+            Hasil akan muncul di sini
+        </div>
+    </div>
+
+    <script>
+        function calculateCuboid() {
+            const length = parseFloat(document.getElementById('length').value);
+            const width = parseFloat(document.getElementById('width').value);
+            const height = parseFloat(document.getElementById('height').value);
+            
+            if (isNaN(length) || isNaN(width) || isNaN(height) || 
+                length <= 0 || width <= 0 || height <= 0) {
+                document.getElementById('cuboidResult').innerHTML = 
+                    'Masukkan nilai yang valid untuk panjang, lebar, dan tinggi';
+                return;
+            }
+            
+            const volume = length * width * height;
+            const surfaceArea = 2 * (length*width + length*height + width*height);
+            
+            document.getElementById('cuboidResult').innerHTML = 
+                `Volume: ${volume.toFixed(2)} <br> Luas Permukaan: ${surfaceArea.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kalender Interaktif</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-image: url('https://wallpapers.com/images/hd/dark-forest-grey-wla7vonxrg48csdy.jpg');
+      backdrop-filter: blur(4px);
+      opacity: 0.9;
+    }
+
+    .calendar {
+      width: 360px;
+      background: rgb(150, 146, 146);
+      border-radius: 10px;
+      box-shadow: 5px 7px 200px rgba(222, 26, 26, 0.1);
+      padding: 20px;
+    }
+
+    .calendar header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .calendar header h2 {
+      margin: 0;
+      font-size: 1.5em;
+    }
+
+    .calendar .nav {
+      display: flex;
+      gap: 10px;
+    }
+
+    .calendar .nav button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .calendar .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .calendar .day {
+      padding: 1%;
+      font-weight: bold;
+      color: white;
+    }
+
+    .calendar .dates {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+    }
+
+    .calendar .date {
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .calendar .date:hover {
+      background: #ac9e9e;
+    }
+
+    .calendar .today {
+      background: #007bff;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<div class="calendar">
+  <header>
+    <h2 id="month-year"></h2>
+    <div class="nav">
+      <button onclick="changeMonth(-1)">&#8592;</button>
+      <button onclick="changeMonth(1)">&#8594;</button>
+    </div>
+  </header>
+  <div class="days">
+    <div class="day">Min</div>
+    <div class="day">Sen</div>
+    <div class="day">Sel</div>
+    <div class="day">Rab</div>
+    <div class="day">Kam</div>
+    <div class="day">Jum</div>
+    <div class="day">Sab</div>
+  </div>
+  <div class="dates" id="dates"></div>
+</div>
+
+<script>
+  const monthYear = document.getElementById("month-year");
+  const datesContainer = document.getElementById("dates");
+
+  let currentDate = new Date();
+
+  function renderCalendar() {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const lastDate = new Date(year, month + 1, 0).getDate();
+
+    const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                        "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+
+    monthYear.textContent = `${monthNames[month]} ${year}`;
+    datesContainer.innerHTML = "";
+
+   
+    for (let i = 0; i < firstDay; i++) {
+      datesContainer.innerHTML += `<div></div>`;
+    }
+
+    for (let day = 1; day <= lastDate; day++) {
+      const date = new Date(year, month, day);
+      const isToday = date.toDateString() === new Date().toDateString();
+      datesContainer.innerHTML += `<div class="date ${isToday ? 'today' : ''}">${day}</div>`;
+    }
+  }
+
+  function changeMonth(delta) {
+    currentDate.setMonth(currentDate.getMonth() + delta);
+    renderCalendar();
+  }
+
+  renderCalendar();
+</script>
+
+</body>
+</html>

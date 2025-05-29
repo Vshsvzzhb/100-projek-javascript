@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rock Paper Scissors</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      text-align: center;
+      padding-top: 50px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    .choices {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .choice-btn {
+      font-size: 2em;
+      padding: 10px 20px;
+      border: none;
+      background: #007bff;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .choice-btn:hover {
+      background: #0056b3;
+    }
+
+    .result {
+      font-size: 1.5em;
+      margin-top: 20px;
+    }
+
+    .scoreboard {
+      margin-top: 20px;
+    }
+
+    .scoreboard span {
+      margin: 0 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>✊✋✌️ Batu - Gunting - Kertas</h2>
+
+  <div class="choices">
+    <button class="choice-btn" onclick="play('Batu')">✊ Batu</button>
+    <button class="choice-btn" onclick="play('Gunting')">✌️ Gunting</button>
+    <button class="choice-btn" onclick="play('Kertas')">✋ Kertas</button>
+  </div>
+
+  <div class="result" id="resultText">Pilih untuk mulai bermain!</div>
+
+  <div class="scoreboard">
+    <span>Pemain: <span id="playerScore">0</span></span>
+    <span>Komputer: <span id="computerScore">0</span></span>
+  </div>
+
+  <script>
+    const resultText = document.getElementById("resultText");
+    const playerScoreDisplay = document.getElementById("playerScore");
+    const computerScoreDisplay = document.getElementById("computerScore");
+
+    let playerScore = 0;
+    let computerScore = 0;
+
+    const choices = ["Batu", "Gunting", "Kertas"];
+
+    function play(playerChoice) {
+      const computerChoice = choices[Math.floor(Math.random() * 3)];
+      let result = "";
+
+      if (playerChoice === computerChoice) {
+        result = "Seri! 🤝";
+      } else if (
+        (playerChoice === "Batu" && computerChoice === "Gunting") ||
+        (playerChoice === "Gunting" && computerChoice === "Kertas") ||
+        (playerChoice === "Kertas" && computerChoice === "Batu")
+      ) {
+        result = `Menang! ${playerChoice} mengalahkan ${computerChoice}`;
+        playerScore++;
+      } else {
+        result = `Kalah! ${computerChoice} mengalahkan ${playerChoice}`;
+        computerScore++;
+      }
+
+      resultText.textContent = result;
+      playerScoreDisplay.textContent = playerScore;
+      computerScoreDisplay.textContent = computerScore;
+    }
+  </script>
+
+</body>
+</html>

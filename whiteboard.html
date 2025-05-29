@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Virtual Whiteboard</title>
+<style>
+  body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+  }
+  #toolbar {
+    background: #333;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  #toolbar label {
+    color: white;
+  }
+  #board {
+    flex: 1;
+    border: 2px solid #333;
+    background: white;
+    cursor: crosshair;
+  }
+  button {
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <label for="colorPicker">Warna:</label>
+  <input type="color" id="colorPicker" value="#000000" />
+  
+  <label for="brushSize">Ukuran:</label>
+  <input type="range" id="brushSize" min="1" max="30" value="5" />
+
+  <button id="clearBtn">Clear</button>
+</div>
+
+<canvas id="board"></canvas>
+
+<script>
+  const canvas = document.getElementById('board');
+  const ctx = canvas.getContext('2d');
+  const colorPicker = document.getElementById('colorPicker');
+  const brushSize = document.getElementById('brushSize');
+  const clearBtn = document.getElementById('clearBtn');
+
+  let drawing = false;
+  let lastX = 0;
+  let lastY = 0;
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight - document.getElementById('toolbar').offsetHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  canvas.addEventListener('mousedown', (e) => {
+    drawing = true;
+    lastX = e.offsetX;
+    lastY = e.offsetY;
+  });
+
+  canvas.addEventListener('mouseup', () => {
+    drawing = false;
+  });
+
+  canvas.addEventListener('mouseout', () => {
+    drawing = false;
+  });
+
+  canvas.addEventListener('mousemove', (e) => {
+    if (!drawing) return;
+    ctx.strokeStyle = colorPicker.value;
+    ctx.lineWidth = brushSize.value;
+    ctx.lineCap = 'round';
+
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+
+    lastX = e.offsetX;
+    lastY = e.offsetY;
+  });
+
+  clearBtn.addEventListener('click', () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  });
+</script>
+
+</body>
+</html>

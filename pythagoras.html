@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teorema Pythagoras</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .calculator {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        input, button, select {
+            padding: 8px;
+            margin: 5px 0;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e9e9e9;
+            border-radius: 5px;
+        }
+        .input-group {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h2>Kalkulator Teorema Pythagoras</h2>
+        <label for="calculationType">Hitung:</label>
+        <select id="calculationType" onchange="showInputs()">
+            <option value="hypotenuse">Sisi Miring (c)</option>
+            <option value="leg">Sisi Lain (a atau b)</option>
+        </select>
+        
+        <div id="hypotenuseInputs" class="input-group">
+            <label for="sideA">Sisi A:</label>
+            <input type="number" id="sideA" placeholder="Masukkan sisi a">
+            <label for="sideB">Sisi B:</label>
+            <input type="number" id="sideB" placeholder="Masukkan sisi b">
+        </div>
+        
+        <div id="legInputs" class="input-group">
+            <label for="hypotenuse">Sisi Miring (c):</label>
+            <input type="number" id="hypotenuse" placeholder="Masukkan sisi miring">
+            <label for="knownLeg">Sisi Diketahui (a atau b):</label>
+            <input type="number" id="knownLeg" placeholder="Masukkan sisi yang diketahui">
+        </div>
+        
+        <button onclick="calculatePythagoras()">Hitung</button>
+        <div class="result" id="pythagorasResult">
+            Hasil akan muncul di sini
+        </div>
+    </div>
+
+    <script>
+        function showInputs() {
+            const calculationType = document.getElementById('calculationType').value;
+            
+            document.getElementById('hypotenuseInputs').style.display = 'none';
+            document.getElementById('legInputs').style.display = 'none';
+            
+            if (calculationType === 'hypotenuse') {
+                document.getElementById('hypotenuseInputs').style.display = 'block';
+            } else {
+                document.getElementById('legInputs').style.display = 'block';
+            }
+        }
+        
+        function calculatePythagoras() {
+            const calculationType = document.getElementById('calculationType').value;
+            let result = '';
+            
+            if (calculationType === 'hypotenuse') {
+                const sideA = parseFloat(document.getElementById('sideA').value);
+                const sideB = parseFloat(document.getElementById('sideB').value);
+                
+                if (isNaN(sideA) || isNaN(sideB) || sideA <= 0 || sideB <= 0) {
+                    document.getElementById('pythagorasResult').innerHTML = 
+                        'Masukkan nilai yang valid untuk sisi a dan b';
+                    return;
+                }
+                
+                const hypotenuse = Math.sqrt(sideA*sideA + sideB*sideB);
+                result = `Sisi Miring (c): ${hypotenuse.toFixed(2)}`;
+            } else {
+                const hypotenuse = parseFloat(document.getElementById('hypotenuse').value);
+                const knownLeg = parseFloat(document.getElementById('knownLeg').value);
+                
+                if (isNaN(hypotenuse) || isNaN(knownLeg) || hypotenuse <= 0 || knownLeg <= 0 || knownLeg >= hypotenuse) {
+                    document.getElementById('pythagorasResult').innerHTML = 
+                        'Masukkan nilai yang valid. Sisi yang diketahui harus lebih kecil dari sisi miring.';
+                    return;
+                }
+                
+                const otherLeg = Math.sqrt(hypotenuse*hypotenuse - knownLeg*knownLeg);
+                result = `Sisi Lain: ${otherLeg.toFixed(2)}`;
+            }
+            
+            document.getElementById('pythagorasResult').innerHTML = result;
+        }
+        
+      
+        window.onload = showInputs;
+    </script>
+</body>
+</html>

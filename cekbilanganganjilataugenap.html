@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cek Ganjil Genap</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .even {
+            color: blue;
+            font-weight: bold;
+        }
+        .odd {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2> Cek Bilangan Ganjil/Genap</h2>
+    <input type="number" id="numberInput" placeholder="Masukkan bilangan">
+    <button onclick="checkOddEven()">Cek</button>
+    <p id="oddEvenResult"></p>
+
+    <script>
+        function checkOddEven() {
+            const number = document.getElementById('numberInput').value;
+            const resultElement = document.getElementById('oddEvenResult');
+            
+            if (number === '') {
+                resultElement.textContent = 'Silakan masukkan bilangan';
+                resultElement.className = '';
+            } else if (number % 2 === 0) {
+                resultElement.textContent = `${number} adalah bilangan genap`;
+                resultElement.className = 'even';
+            } else {
+                resultElement.textContent = `${number} adalah bilangan ganjil`;
+                resultElement.className = 'odd';
+            }
+        }
+    </script>
+</body>
+</html>

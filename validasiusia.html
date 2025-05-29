@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Validasi Usia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <h2> Validasi Usia</h2>
+    <p>Masukkan usia Anda:</p>
+    <input type="number" id="ageInput" placeholder="Masukkan usia">
+    <button onclick="validateAge()">Validasi</button>
+    <div id="ageResult" class="result"></div>
+
+    <script>
+        function validateAge() {
+            const age = document.getElementById('ageInput').value;
+            const resultElement = document.getElementById('ageResult');
+            
+            if (age === '') {
+                resultElement.textContent = 'Silakan masukkan usia Anda';
+                resultElement.className = 'result error';
+            } else if (age < 0) {
+                resultElement.textContent = 'Usia tidak boleh negatif';
+                resultElement.className = 'result error';
+            } else if (age < 18) {
+                resultElement.textContent = 'Anda masih di bawah umur';
+                resultElement.className = 'result error';
+            } else if (age >= 18 && age < 60) {
+                resultElement.textContent = 'Anda sudah dewasa';
+                resultElement.className = 'result success';
+            } else {
+                resultElement.textContent = 'Anda sudah lansia';
+                resultElement.className = 'result success';
+            }
+        }
+    </script>
+</body>
+</html>

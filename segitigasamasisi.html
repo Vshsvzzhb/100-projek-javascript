@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Keliling Segitiga Sama Sisi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .calculator {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px 0;
+        }
+        button {
+            background-color: #673ab7;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #5e35b1;
+        }
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h2>Kalkulator Keliling Segitiga Sama Sisi</h2>
+        <label for="side">Panjang Sisi:</label>
+        <input type="number" id="side" placeholder="Masukkan panjang sisi">
+        <button onclick="calculatePerimeter()">Hitung Keliling</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculatePerimeter() {
+            const side = parseFloat(document.getElementById('side').value);
+            
+            if (isNaN(side)) {
+                document.getElementById('result').innerHTML = "Masukkan nilai yang valid!";
+                return;
+            }
+            
+            const perimeter = 3 * side;
+            document.getElementById('result').innerHTML = `Keliling Segitiga Sama Sisi = ${perimeter.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>

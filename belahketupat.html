@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator Belah Ketupat</title>
+</head>
+<body>
+  <div class="container">
+    <h1>Kalkulator Belah Ketupat</h1>
+    
+    <label for="diagonal1">Diagonal 1 (d1):</label>
+    <input type="number" id="diagonal1" placeholder="Masukkan diagonal 1">
+
+    <label for="diagonal2">Diagonal 2 (d2):</label>
+    <input type="number" id="diagonal2" placeholder="Masukkan diagonal 2">
+
+    <label for="sisi">Panjang Sisi:</label>
+    <input type="number" id="sisi" placeholder="Masukkan panjang sisi">
+
+    <button onclick="hitung()">Hitung</button>
+
+    <div id="hasil">
+      <p><strong>Luas:</strong> <span id="luas">-</span></p>
+      <p><strong>Keliling:</strong> <span id="keliling">-</span></p>
+    </div>
+  </div>
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  background: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+}
+
+.container {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  width: 300px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px;
+  background: #007BFF;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+#hasil {
+  margin-top: 20px;
+}
+
+  </style>
+
+  <script>
+    function hitung() {
+  const d1 = parseFloat(document.getElementById("diagonal1").value);
+  const d2 = parseFloat(document.getElementById("diagonal2").value);
+  const sisi = parseFloat(document.getElementById("sisi").value);
+
+  if (isNaN(d1) || isNaN(d2) || isNaN(sisi)) {
+    alert("Mohon masukkan semua nilai dengan benar.");
+    return;
+  }
+
+  const luas = (d1 * d2) / 2;
+  const keliling = 4 * sisi;
+
+  document.getElementById("luas").textContent = luas.toFixed(2);
+  document.getElementById("keliling").textContent = keliling.toFixed(2);
+}
+
+  </script>
+</body>
+</html>
