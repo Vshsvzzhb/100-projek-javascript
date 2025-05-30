@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Letter with Dots</title>
+</head>
+<body>
+    <h2>Letter with Dots Loop</h2>
+    <button onclick="runLoop()">Run Loop</button>
+    <div id="output"></div>
+
+    <script>
+        function runLoop() {
+            const letters = ['a', 'b', 'c', 'd'];
+            let output = "";
+            for (let i = 0; i < 4; i++) {
+                output += letters[i] + ".<br>";
+            }
+            document.getElementById('output').innerHTML = output;
+        }
+    </script>
+</body>
+</html>

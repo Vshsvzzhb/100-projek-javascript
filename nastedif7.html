@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Age Category</title>
+</head>
+<body>
+    <h2>Age Category</h2>
+    <label for="birthYear">Masukkan tahun lahir Anda:</label>
+    <input type="number" id="birthYear">
+    <button onclick="checkAgeCategory()">Check</button>
+    <p id="result"></p>
+
+    <script>
+        function checkAgeCategory() {
+            const birthYear = parseInt(document.getElementById('birthYear').value);
+            const currentYear = new Date().getFullYear();
+            const age = currentYear - birthYear;
+            let result = "";
+            
+            if (age >= 18) {
+                if (age >= 60) {
+                    result = "Anda sudah lansia.";
+                } else {
+                    result = "Anda sudah dewasa.";
+                }
+            } else {
+                if (age >= 13) {
+                    result = "Anda remaja.";
+                } else {
+                    result = "Anda masih anak-anak.";
+                }
+            }
+            
+            document.getElementById('result').textContent = result;
+        }
+    </script>
+</body>
+</html>

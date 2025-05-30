@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vertical Numbers with Sum</title>
+</head>
+<body>
+    <h2>Vertical Numbers with Sum</h2>
+    <button onclick="runLoop()">Run Loop</button>
+    <div id="output"></div>
+
+    <script>
+        function runLoop() {
+            let sum = 0;
+            let output = "";
+            for (let i = 0; i < 5; i++) {
+                output += (i + 1) + "<br>";
+                sum += (i + 1);
+            }
+            output += "--+<br>" + sum;
+            document.getElementById('output').innerHTML = output;
+        }
+    </script>
+</body>
+</html>

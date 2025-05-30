@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Number Sequence with Sum</title>
+</head>
+<body>
+    <h2>Number Sequence with Sum</h2>
+    <button onclick="runLoop()">Run Loop</button>
+    <p id="output"></p>
+
+    <script>
+        function runLoop() {
+            let sum = 0;
+            let sequence = "";
+            for (let i = 0; i < 5; i++) {
+                sequence += (i + 1) + " ";
+                sum += (i + 1);
+            }
+            document.getElementById('output').textContent = sequence + "= " + sum;
+        }
+    </script>
+</body>
+</html>

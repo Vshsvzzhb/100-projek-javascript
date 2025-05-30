@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Addition Sequence</title>
+</head>
+<body>
+    <h2>Addition Sequence with Sum</h2>
+    <button onclick="runLoop()">Run Loop</button>
+    <p id="output"></p>
+
+    <script>
+        function runLoop() {
+            let sum = 0;
+            let sequence = "";
+            for (let i = 1; i <= 5; i++) {
+                if (i < 5) {
+                    sequence += i + " + ";
+                } else {
+                    sequence += i + " = ";
+                }
+                sum += i;
+            }
+            document.getElementById('output').textContent = sequence + sum;
+        }
+    </script>
+</body>
+</html>

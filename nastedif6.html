@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leap Year Check</title>
+</head>
+<body>
+    <h2>Leap Year Check</h2>
+    <label for="year">Masukkan tahun:</label>
+    <input type="number" id="year">
+    <button onclick="checkLeapYear()">Check</button>
+    <p id="result"></p>
+
+    <script>
+        function checkLeapYear() {
+            const year = parseInt(document.getElementById('year').value);
+            let result = "";
+            
+            if (year % 4 === 0) {
+                if (year % 100 === 0) {
+                    if (year % 400 === 0) {
+                        result = `${year} adalah tahun kabisat.`;
+                    } else {
+                        result = `${year} bukan tahun kabisat.`;
+                    }
+                } else {
+                    result = `${year} adalah tahun kabisat.`;
+                }
+            } else {
+                result = `${year} bukan tahun kabisat.`;
+            }
+            
+            document.getElementById('result').textContent = result;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Even Number Addition</title>
+</head>
+<body>
+    <h2>Even Number Addition</h2>
+    <button onclick="runLoop()">Run Loop</button>
+    <p id="output"></p>
+
+    <script>
+        function runLoop() {
+            let sum = 0;
+            let sequence = "";
+            for (let i = 2; i <= 10; i += 2) {
+                if (i < 10) {
+                    sequence += i + " + ";
+                } else {
+                    sequence += i + " = ";
+                }
+                sum += i;
+            }
+            document.getElementById('output').textContent = sequence + sum;
+        }
+    </script>
+</body>
+</html>

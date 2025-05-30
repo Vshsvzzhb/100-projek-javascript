@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vertical Loop</title>
+</head>
+<body>
+    <h2>Vertical "cerdas" Loop</h2>
+    <button onclick="runLoop()">Run Loop</button>
+    <div id="output"></div>
+
+    <script>
+        function runLoop() {
+            let output = "";
+            for (let i = 0; i < 5; i++) {
+                output += "cerdas<br>";
+            }
+            document.getElementById('output').innerHTML = output;
+        }
+    </script>
+</body>
+</html>
